@@ -1,0 +1,88 @@
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap');
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        /* style the form container */
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+        }
+
+        .form-container h1 {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* style the form elements */
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .form-container input[type=text],
+        .form-container input[type=email],
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        .form-container input[type=submit] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-container input[type=submit]:hover {
+            background-color: #3e8e41;
+        }
+  </style>
+</head>
+<body>
+
+    <form method="post" action="/home/" class="form-container">
+        {% csrf_token %}
+        <h1>Select a Location</h1>
+
+        <label for="location">Location:</label>
+        <select id="location" name="location">
+            <option value="location1">Location 1</option>
+            <option value="location2">Location 2</option>
+            <option value="location3">Location 3</option>
+        </select>
+
+        
+        <input type="submit" value="Continue">
+        
+    </form>
+  
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% block content %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap');
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        /* style the form container */
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+        }
+
+        /* style the form elements */
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .form-container input[type=text],
+        .form-container input[type=email],
+        .form-container input[type=date],
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        .form-container input[type=submit] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-container input[type=submit]:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+  </head>
+  <body>
+    <form action="{% url 'home' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Home</button>
+    </form>
+    
+    <form method="post" action="/add_member/" class="form-container">
+        {% csrf_token %}
+        <label>Surname</label>
+        <input type="text" name="surname">
+
+        <label >Other Name</label>
+        <input type="text" name="other_name">
+
+        <label>Primary phone number</label>
+        <input type="text" name="primary_phone_number">
+
+        <label>Whatsapp phone number</label>    
+        <input type="text" name="whatsapp_phone_number">
+
+        <label>Place of residence</label>    
+        <input type="text" name="place_of_residence">    
+        
+        <label>Work Place</label>
+        <input type="text" name="work_place">
+
+        <label>Date of birth</label>
+        <input type="date" name="date_of_birth">
+
+        <label>Missional Community</label>
+        <input type="text" name="missional_community">
+
+        <input type="submit" value="Save">
+    </form>
+
+  </body>
+</html>
+
+{% endblock %}
