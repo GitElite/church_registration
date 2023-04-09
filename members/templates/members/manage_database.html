@@ -67,7 +67,7 @@
         <button type="submit">Home</button>
     </form>
         
-    <!-- <table>
+    <table>
         <thead>
           <tr>
             {% for column in columns %}
@@ -85,38 +85,7 @@
             </tr>
             {% endfor %}
         </tbody>
-    </table> -->
-
-
-
-    
-    
-
-    {% with excluded_columns="id" %}
-    <table>
-        <thead>
-            <tr>
-                {% for column in columns %}
-                    {% if column not in excluded_columns|split:"," %}
-                        <th>{{ column }}</th>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in rows %}
-            <tr>
-                <td><input type="checkbox" name="row_checkbox" value="{{ row.id }}"></td>
-                {% for column in row %}
-                    {% if not forloop.counter0|stringformat:"s" in excluded_columns|split:"," %}
-                        <td>{{ column }}</td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
     </table>
-{% endwith %}
 
 
 
