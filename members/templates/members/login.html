@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/349801ffb5.js" crossorigin="anonymous"></script>
     <title>Document</title>
 
     <style>
@@ -112,6 +113,18 @@
                 transform: translateX(0);
             }
         }
+
+        .password-field-container {
+            position: relative;
+        }
+
+        #show-password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translate(-50%, -20%);
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -122,10 +135,40 @@
         {% csrf_token %}
         <h1>Login</h1>
 
-        {{ form.as_p }}
+        <div class="form-group">
+            <label for="{{ form.user_name.id_for_label }}">Username:</label>
+            {{ form.user_name }}
+        </div>
+        
+        <div class="form-group password-field-container">
+            <label for="{{ form.user_password.id_for_label }}">Password:</label>
+            {{ form.user_password }}
+            <i class="fa fa-eye" id="show-password-toggle"></i>
+        </div>
 
         <button type="submit">Continue</button>
     </form>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          var showPasswordToggle = document.getElementById('show-password-toggle');
+          var passwordField = document.getElementById('password-field');
+      
+          showPasswordToggle.addEventListener('click', function() {
+            if (passwordField.type === 'password') {
+              passwordField.type = 'text';
+              showPasswordToggle.classList.remove('fa-eye');
+              showPasswordToggle.classList.add('fa-eye-slash');
+            } else {
+              passwordField.type = 'password';
+              showPasswordToggle.classList.remove('fa-eye-slash');
+              showPasswordToggle.classList.add('fa-eye');
+            }
+          });
+        });
+    </script>
+      
 </body>
 </html>
 
