@@ -62,37 +62,61 @@
     </style>
 </head>
 <body>
-    <form action="{% url 'home' %}" method="post">
+
+      <form method="post" action="{% url 'update_rows' %}">
+          {% csrf_token %}
+          <input type="submit" value="Edit Selected Row">
+          <input type="hidden" name="member_id" id="member_id">
+      </form>
+      <form method="post" action="{% url 'delete_rows' %}">
         {% csrf_token %}
-        <button type="submit">Home</button>
-    </form>
-        
-    <table>
-        <thead>
-          <tr>
-            {% for column in columns %}
-            <th>{{ column }}</th>
-            {% endfor %}
-          </tr>
-        </thead>
-        <tbody>
-            {% for row in rows %}
+        <input type="submit" value="Delete Selected Rows">
+        <table>
+          <thead>
             <tr>
-                <td><input type="checkbox" name="row_checkbox" value="{{ row.id }}"></td>
-                {% for column in row %}
-                    <td>{{ column }}</td>
-                {% endfor %}
+              <th>Rows</th>
+              {% for column in columns %}
+                <th>{{ column }}</th>
+              {% endfor %}
             </tr>
+          </thead>
+          <tbody>
+            {% for row in rows %}
+              <tr>
+                <td><input type="checkbox" name="row_checkbox" value="{{ row.0 }}"></td>
+                {% for column in row %}
+                  <td>{{ column }}</td>
+                {% endfor %}
+              </tr>
             {% endfor %}
-        </tbody>
-    </table>
-
-
+          </tbody>
+        </table>
+    </form>
+      
 
 
       
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        const checkboxes = document.getElementsByName("row_checkbox");
+        const memberIdInput = document.getElementById("member_id");
+    
+        for (const checkbox of checkboxes) {
+            checkbox.addEventListener("change", function() {
+                if (checkbox.checked) {
+                    memberIdInput.value = checkbox.value;
+                    // Uncheck other checkboxes
+                    for (const otherCheckbox of checkboxes) {
+                        if (otherCheckbox !== checkbox) {
+                            otherCheckbox.checked = false;
+                        }
+                    }
+                } else {
+                    memberIdInput.value = "";
+                }
+            });
+        }
+    </script>
+  
 </body>
 </html>
 

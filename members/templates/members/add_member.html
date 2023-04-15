@@ -1,63 +1,13 @@
 {% block content %}
+{% load static %}
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap');
-        body {
-            font-family: 'Noto Sans', sans-serif;
-        }
-
-        /* style the form container */
-        .form-container {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f2f2f2;
-            border-radius: 5px;
-        }
-
-        /* style the form elements */
-        .form-container label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .form-container input[type=text],
-        .form-container input[type=email],
-        .form-container input[type=date],
-        .form-container select,
-        .form-container textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 3px;
-            box-sizing: border-box;
-            font-size: 16px;
-            font-family: inherit;
-        }
-
-        .form-container input[type=submit] {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 3px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .form-container input[type=submit]:hover {
-            background-color: #3e8e41;
-        }
-    </style>
+    <title>Add Member</title>
+    <link rel="stylesheet" href="{% static '/members/css/form_styles.css' %}">
   </head>
   <body>
     <form action="{% url 'home' %}" method="post">
@@ -65,35 +15,35 @@
         <button type="submit">Home</button>
     </form>
     
-    <form method="post" action="/add_member/" class="form-container">
+    <form method="post" action="{% if member %}/update_member/{{ member.id }}{% else %}/add_member/{% endif %}" class="form-container">
         {% csrf_token %}
+
         <label>Surname</label>
-        <input type="text" name="surname">
+        <input type="text" name="surname" value="{% if member %}{{ member.Surname }}{% endif %}">
 
         <label >Other Name</label>
-        <input type="text" name="other_name">
+        <input type="text" name="other_name" value="{% if member %}{{ member.Other_name }}{% endif %}">
 
         <label>Primary phone number</label>
-        <input type="text" name="primary_phone_number">
+        <input type="text" name="primary_phone_number" value="{% if member %}{{ member.Primary_phone_number }}{% endif %}">
 
-        <label>Whatsapp phone number</label>    
-        <input type="text" name="whatsapp_phone_number">
+        <label>Whatsapp phone number</label> 
+        <input type="text" name="whatsapp_phone_number" value="{% if member %}{{ member.Whatsapp_phone_number }}{% endif %}">
 
-        <label>Place of residence</label>    
-        <input type="text" name="place_of_residence">    
-        
+        <label>Place of residence</label>  
+        <input type="text" name="place_of_residence" value="{% if member %}{{ member.Place_of_residence }}{% endif %}">
+
         <label>Work Place</label>
-        <input type="text" name="work_place">
+        <input type="text" name="work_place" value="{% if member %}{{ member.Work_place }}{% endif %}">
 
         <label>Date of birth</label>
-        <input type="date" name="date_of_birth">
+        <input type="date" name="date_of_birth" value="{% if member %}{{ member.Date_of_birth|date:'Y-m-d' }}{% endif %}">
 
         <label>Missional Community</label>
-        <input type="text" name="missional_community">
+        <input type="text" name="missional_community" value="{% if member %}{{ member.Missional_Community }}{% endif %}">
 
-        <input type="submit" value="Save">
+        <input type="submit" value="{% if member %}Update{% else %}Save{% endif %}">
     </form>
-
   </body>
 </html>
 

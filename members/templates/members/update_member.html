@@ -1,0 +1,9 @@
+{% extends 'members/add_member.html' %}
+
+{% block content %}
+    <form method="get" action="{{ form_action }}/">
+        {{ block.super }}
+        <p>Debug: Member ID: {{ member.id }}; Surname: {{ member.Surname }}</p>
+    </form>
+{% endblock %}
+

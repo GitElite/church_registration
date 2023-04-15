@@ -1,8 +1,11 @@
 from django.db import connection
-from django.shortcuts import render, redirect
+from django.http import HttpResponseBadRequest, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse
 from .models import Member
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib import messages
 
 
 def select_location(request):
@@ -49,7 +52,6 @@ def add_member(request):
         work_place = request.POST.get('work_place')
         date_of_birth = request.POST.get('date_of_birth')
         missional_community = request.POST.get('missional_community')
-        profession = request.POST.get('profession')
 
         m = Member(Surname=surname, Other_name=other_name, Primary_phone_number=primary_phone_number,
                     Whatsapp_phone_number=whatsapp_phone_number, Place_of_residence=place_of_residence,
@@ -71,6 +73,49 @@ def manage_database(request):
     return render(request, 'members/manage_database.html', {'columns': columns, 'rows': rows})
 
 
+def delete_rows(request):
+    if request.method == 'POST':
+        selected_rows = request.POST.getlist('row_checkbox')
+        table_name = 'members_member'
+        
+        with connection.cursor() as cursor:
+            for row_id in selected_rows:
+                if row_id:
+                    cursor.execute(f"DELETE FROM {table_name} WHERE id = %s", [row_id])
+
+        messages.success(request, f'Successfully deleted {len(selected_rows)} row(s).')
+        return HttpResponseRedirect(reverse('manage_database'))
+    else:
+        return HttpResponseRedirect(reverse('manage_database'))
 
 def home(request):
     return render(request, 'members/home.html', {})
+
+
+def update_member(request, member_id):
+    member = get_object_or_404(Member, id=member_id)
+    
+    if request.method == 'POST':
+        member.surname = request.POST['surname']
+        member.other_name = request.POST['other_name']
+        member.primary_phone_number = request.POST['primary_phone_number']
+        member.whatsapp_phone_number = request.POST['whatsapp_phone_number']
+        member.place_of_residence = request.POST['place_of_residence']
+        member.work_place = request.POST['work_place']
+        member.date_of_birth = request.POST['date_of_birth']
+        member.missional_community = request.POST['missional_community']
+        member.save()
+
+        return redirect('manage_database')
+    
+    context = {
+        'member': member,
+    }
+
+    return render(request, 'members/update_member.html', context)
+
+
+def update_rows(request):
+    if request.method == 'POST':
+        member_id = request.POST['member_id']
+        return redirect('update_member', member_id=member_id)
