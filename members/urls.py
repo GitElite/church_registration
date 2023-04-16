@@ -1,4 +1,5 @@
 from django.urls import path
+from django.urls import re_path
 from . import views
 from django.contrib.auth import views as auth_views
 
@@ -10,5 +11,6 @@ urlpatterns = [
     path('add_member/', views.add_member, name='add_member'),
     path('delete_rows/', views.delete_rows, name='delete_rows'),
     path('update_member/<int:member_id>/', views.update_member, name='update_member'),
+    re_path(r'^update_member/(?P<member_id>[0-9]+)/?$', views.update_member, name='update_member'),
     path('update_rows/', views.update_rows, name='update_rows'),
 ]

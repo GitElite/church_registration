@@ -1,9 +1,34 @@
 {% extends 'members/add_member.html' %}
 
-{% block content %}
-    <form method="get" action="{{ form_action }}/">
-        {{ block.super }}
-        <p>Debug: Member ID: {{ member.id }}; Surname: {{ member.Surname }}</p>
+{% block form %}
+    <form method="post" action="{% url 'update_member' member_id=member.id %}" class="form-container">
+        {% csrf_token %}
+        <input type="hidden" name="member_id" value="{{ member.id }}">
+        
+        <label>Surname</label>
+        <input type="text" name="surname" value="{{ member.Surname }}">
+
+        <label>Other Name</label>
+        <input type="text" name="other_name" value="{{ member.Other_name }}">
+
+        <label>Primary phone number</label>
+        <input type="text" name="primary_phone_number" value="{{ member.Primary_phone_number }}">
+
+        <label>Whatsapp phone number</label>
+        <input type="text" name="whatsapp_phone_number" value="{{ member.Whatsapp_phone_number }}">
+
+        <label>Place of residence</label>
+        <input type="text" name="place_of_residence" value="{{ member.Place_of_residence }}">
+
+        <label>Work Place</label>
+        <input type="text" name="work_place" value="{{ member.Work_place }}">
+
+        <label>Date of birth</label>
+        <input type="date" name="date_of_birth" value="{{ member.Date_of_birth }}">
+
+        <label>Missional Community</label>
+        <input type="text" name="missional_community" value="{{ member.Missional_Community }}">
+
+        <input type="submit" value="Update">
     </form>
 {% endblock %}
-

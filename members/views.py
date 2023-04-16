@@ -93,26 +93,28 @@ def home(request):
 
 
 def update_member(request, member_id):
-    member = get_object_or_404(Member, id=member_id)
-    
+    member = Member.objects.get(pk=member_id)
+
     if request.method == 'POST':
-        member.surname = request.POST['surname']
-        member.other_name = request.POST['other_name']
-        member.primary_phone_number = request.POST['primary_phone_number']
-        member.whatsapp_phone_number = request.POST['whatsapp_phone_number']
-        member.place_of_residence = request.POST['place_of_residence']
-        member.work_place = request.POST['work_place']
-        member.date_of_birth = request.POST['date_of_birth']
-        member.missional_community = request.POST['missional_community']
+        member.Surname = request.POST['surname']
+        member.Other_name = request.POST['other_name']
+        member.Primary_phone_number = request.POST['primary_phone_number']
+        member.Whatsapp_phone_number = request.POST['whatsapp_phone_number']
+        member.Place_of_residence = request.POST['place_of_residence']
+        member.Work_place = request.POST['work_place']
+        member.Date_of_birth = request.POST['date_of_birth']
+        member.Missional_Community = request.POST['missional_community']
+
         member.save()
 
         return redirect('manage_database')
-    
+
     context = {
         'member': member,
     }
 
     return render(request, 'members/update_member.html', context)
+
 
 
 def update_rows(request):

@@ -37,7 +37,7 @@
         <input type="text" name="work_place" value="{% if member %}{{ member.Work_place }}{% endif %}">
 
         <label>Date of birth</label>
-        <input type="date" name="date_of_birth" value="{% if member %}{{ member.Date_of_birth|date:'Y-m-d' }}{% endif %}">
+        <input type="date" name="date_of_birth" value="{% if member %}{{ member.Date_of_birth }}{% endif %}">
 
         <label>Missional Community</label>
         <input type="text" name="missional_community" value="{% if member %}{{ member.Missional_Community }}{% endif %}">
