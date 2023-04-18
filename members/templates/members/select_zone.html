@@ -1,0 +1,56 @@
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="{% static 'members/css/select_zone_styles.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-6">
+                <form action="{% url 'home' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Home</button>
+                </form>
+            </div>
+    
+            <div class="col-md-6 d-flex justify-content-end">
+                <form method="post" action="{% url 'logout_view' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <form method="post" action="/home/" class="form-container mt-5">
+        {% csrf_token %}
+        <h1>Select a Zone</h1>
+
+        <label for="zone">Zone:</label>
+        <select id="zone" name="zone">
+            <option value="zone1">Zone 1</option>
+            <option value="zone2">Zone 2</option>
+            <option value="zone3">Zone 3</option>
+            <option value="zone4">Zone 4</option>
+            <option value="zone5">Zone 5</option>
+            <option value="zone6">Zone 6</option>
+        </select>
+
+        
+        <input type="submit" value="Continue">
+        
+    </form>
+  
+</body>
+</html>
+
+{% endblock %}

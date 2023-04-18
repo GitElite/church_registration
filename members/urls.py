@@ -4,7 +4,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('select_location/', views.select_location, name='select_location'),
+    path('select_zone/', views.select_zone, name='select_zone'),
     path('manage_database/', views.manage_database, name='manage_database'),
     path('', views.login, name='login'),
     path('home/', views.home, name='home'),
@@ -13,4 +13,5 @@ urlpatterns = [
     path('update_member/<int:member_id>/', views.update_member, name='update_member'),
     re_path(r'^update_member/(?P<member_id>[0-9]+)/?$', views.update_member, name='update_member'),
     path('update_rows/', views.update_rows, name='update_rows'),
+    path('logout_view/', views.logout_view, name='logout_view'),
 ]

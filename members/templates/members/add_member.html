@@ -3,48 +3,73 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add Member</title>
-    <link rel="stylesheet" href="{% static '/members/css/form_styles.css' %}">
-  </head>
-  <body>
-    <form action="{% url 'home' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Home</button>
-    </form>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add Member</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'members/css/form_styles.css' %}">
+    </head>
+
+    <body>
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="{% url 'home' %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Home</button>
+                    </form>
+                </div>
+        
+                <div class="col-md-6 d-flex justify-content-end">
+                    <form method="post" action="{% url 'logout_view' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <form method="post" action="{% if member %}/update_member/{{ member.id }}{% else %}/add_member/{% endif %}" class="form-container mt-3">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="surname" class="form-label">Surname</label>
+                <input type="text" name="surname" id="surname" class="form-control custom-input" value="{% if member %}{{ member.Surname }}{% endif %}">
+            </div>
+
+            <div class="mb-3">
+                <label for="other_name" class="form-label">Other Name</label>
+                <input type="text" name="other_name" id="other_name" class="form-control custom-input" value="{% if member %}{{ member.Other_name }}{% endif %}">
+            </div>
+
+            <div class="mb-3">
+                <label for="phone_number" class="form-label">Phone number</label>
+                <input type="text" name="phone_number" id="phone_number" class="form-control custom-input" value="{% if member %}{{ member.Phone_number }}{% endif %}">
+            </div>
+
+            <div class="mb-3">
+                <label for="date_of_birth" class="form-label">Date of birth</label>
+                <input type="date" name="date_of_birth" id="date_of_birth" class="form-control custom-input" value="{% if member %}{{ member.Date_of_birth }}{% endif %}">
+            </div>
+
+            <div class="mb-3">
+                <label for="wedding_anniversary" class="form-label">Wedding Anniversary</label>
+                <input type="date" name="wedding_anniversary" id="wedding_anniversary" class="form-control custom-input" value="{% if member %}{{ member.Wedding_anniversary }}{% endif %}">
+            </div>
+
+            <div class="mb-3">
+                <label for="missional_community" class="form-label">Missional Community</label>
+                <input type="text" name="missional_community" id="missional_community" class="form-control custom-input" value="{% if member %}{{ member.Missional_Community }}{% endif %}">
+            </div>
+
+            <input type="submit" value="{% if member %}Update{% else %}Save{% endif %}" class="btn custom-submit">
+        </form>
     
-    <form method="post" action="{% if member %}/update_member/{{ member.id }}{% else %}/add_member/{% endif %}" class="form-container">
-        {% csrf_token %}
 
-        <label>Surname</label>
-        <input type="text" name="surname" value="{% if member %}{{ member.Surname }}{% endif %}">
-
-        <label >Other Name</label>
-        <input type="text" name="other_name" value="{% if member %}{{ member.Other_name }}{% endif %}">
-
-        <label>Primary phone number</label>
-        <input type="text" name="primary_phone_number" value="{% if member %}{{ member.Primary_phone_number }}{% endif %}">
-
-        <label>Whatsapp phone number</label> 
-        <input type="text" name="whatsapp_phone_number" value="{% if member %}{{ member.Whatsapp_phone_number }}{% endif %}">
-
-        <label>Place of residence</label>  
-        <input type="text" name="place_of_residence" value="{% if member %}{{ member.Place_of_residence }}{% endif %}">
-
-        <label>Work Place</label>
-        <input type="text" name="work_place" value="{% if member %}{{ member.Work_place }}{% endif %}">
-
-        <label>Date of birth</label>
-        <input type="date" name="date_of_birth" value="{% if member %}{{ member.Date_of_birth }}{% endif %}">
-
-        <label>Missional Community</label>
-        <input type="text" name="missional_community" value="{% if member %}{{ member.Missional_Community }}{% endif %}">
-
-        <input type="submit" value="{% if member %}Update{% else %}Save{% endif %}">
-    </form>
-  </body>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    </body>
 </html>
 
 {% endblock %}
