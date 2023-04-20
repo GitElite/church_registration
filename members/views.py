@@ -1,8 +1,13 @@
+from io import BytesIO, StringIO
+import openpyxl
+from openpyxl.styles import Font
 from django.shortcuts import render, redirect
 from .models import Member
 from .forms import LoginForm
 from django.contrib.auth import authenticate, logout, login as auth_login
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+
 
 @login_required
 def select_zone(request):
@@ -23,7 +28,7 @@ def login(request):
             if user is not None:
                 print("Auth succeeded")
                 auth_login(request, user)
-                return redirect('select_zone')
+                return redirect('home')
             else:
                 context['form'] = form
                 context['error_message'] = 'Username/Password is incorrect'
@@ -112,3 +117,40 @@ def update_rows(request):
     if request.method == 'POST':
         member_id = request.POST['member_id']
         return redirect('update_member', member_id=member_id)
+
+
+def export_excel(request):
+    members = Member.objects.all()
+
+    # Create a new workbook and add a worksheet
+    wb = openpyxl.Workbook()
+    ws = wb.active
+
+    # Define the font for bold text
+    bold_font = Font(bold=True)
+
+    # Create column headers with bold text
+    headers = ['Surname', 'Other Name', 'Phone Number', 'Date of Birth', 'Wedding Anniversary', 'Missional Community']
+    for col_num, header in enumerate(headers, 1):
+        col_letter = openpyxl.utils.get_column_letter(col_num)
+        ws['{}1'.format(col_letter)] = header
+        ws['{}1'.format(col_letter)].font = bold_font
+
+    # Add data to the worksheet
+    for row_num, member in enumerate(members, 2):
+        ws.cell(row=row_num, column=1, value=member.Surname)
+        ws.cell(row=row_num, column=2, value=member.Other_name)
+        ws.cell(row=row_num, column=3, value=member.Phone_number)
+        ws.cell(row=row_num, column=4, value=member.Date_of_birth)
+        ws.cell(row=row_num, column=5, value=member.Wedding_anniversary)
+        ws.cell(row=row_num, column=6, value=member.Missional_Community)
+
+    # Save the workbook to a bytes buffer
+    buffer = BytesIO()
+    wb.save(buffer)
+
+    # Serve the xlsx file as a response
+    buffer.seek(0)
+    response = HttpResponse(buffer.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=members.xlsx'
+    return response

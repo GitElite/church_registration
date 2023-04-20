@@ -1,10 +1,9 @@
 from django.urls import path
 from django.urls import re_path
 from . import views
-from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('select_zone/', views.select_zone, name='select_zone'),
+    # path('select_zone/', views.select_zone, name='select_zone'),
     path('manage_database/', views.manage_database, name='manage_database'),
     path('', views.login, name='login'),
     path('home/', views.home, name='home'),
@@ -14,4 +13,5 @@ urlpatterns = [
     re_path(r'^update_member/(?P<member_id>[0-9]+)/?$', views.update_member, name='update_member'),
     path('update_rows/', views.update_rows, name='update_rows'),
     path('logout_view/', views.logout_view, name='logout_view'),
+    path('export_excel/', views.export_excel, name='export_excel'),
 ]
