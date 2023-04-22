@@ -14,8 +14,6 @@ from pathlib import Path
 
 from django.urls import reverse
 
-import dj_database_url
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,10 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'church_registration.urls'
 
@@ -82,7 +77,14 @@ WSGI_APPLICATION = 'church_registration.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://postgres:Alpha123@localhost/fstDB'),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fstDB',
+        'USER': 'postgres',
+        'PASSWORD': 'Alpha123',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 
@@ -128,3 +130,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'
+
+TWILIO_ACCOUNT_SID = 'AC0a242acded83af93706c2f48ebc72ca9'
+TWILIO_AUTH_TOKEN = 'eb90d1a2c471203138db38df8f588c4f'
+TWILIO_PHONE_NUMBER = '+16204136355'
