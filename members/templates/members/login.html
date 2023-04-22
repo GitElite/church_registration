@@ -10,12 +10,46 @@
     <script src="https://kit.fontawesome.com/349801ffb5.js" crossorigin="anonymous"></script>
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'members/css/login_styles.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        let logoutTimeout;
+
+        function startLogoutTimer() {
+            // Set the timeout to 10 minutes (600,000 milliseconds)
+            logoutTimeout = setTimeout(logout, 600000);
+        }
+
+        function stopLogoutTimer() {
+            clearTimeout(logoutTimeout);
+        }
+
+        function logout() {
+            $.ajax({
+                url: '/ajax/logout/',
+                method: 'POST',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    console.log('User logged out.');
+                }
+            });
+        }
+
+        window.addEventListener('blur', startLogoutTimer);
+        window.addEventListener('focus', stopLogoutTimer);
+        window.addEventListener('beforeunload', function(event) {
+            stopLogoutTimer();
+            logout();
+        });
+    </script>
 </head>
 
 <body>
     {% if error_message %}
         <div class="alert">{{ error_message }}</div>
     {% endif %}
+
     <form action="/" method="post" class="form-container" autocomplete="off">
         {% csrf_token %}
         <h1>Login</h1>
@@ -33,27 +67,8 @@
 
         <button type="submit">Continue</button>
     </form>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          var showPasswordToggle = document.getElementById('show-password-toggle');
-          var passwordField = document.getElementById('password-field');
-      
-          showPasswordToggle.addEventListener('click', function() {
-            if (passwordField.type === 'password') {
-              passwordField.type = 'text';
-              showPasswordToggle.classList.remove('fa-eye');
-              showPasswordToggle.classList.add('fa-eye-slash');
-            } else {
-              passwordField.type = 'password';
-              showPasswordToggle.classList.remove('fa-eye-slash');
-              showPasswordToggle.classList.add('fa-eye');
-            }
-          });
-        });
-    </script>
-      
+          
+    <script src="{% static 'members/js/login_script.js' %}"></script>
 </body>
 </html>
 

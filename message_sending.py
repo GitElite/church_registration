@@ -27,19 +27,6 @@ def send_birthday_sms(phone_number, message):
         to=phone_number
     )
 
-def send_whatsapp_birthday_message(phone_number, message):
-    account_sid = settings.TWILIO_ACCOUNT_SID
-    auth_token = settings.TWILIO_AUTH_TOKEN
-    twilio_number = settings.TWILIO_PHONE_NUMBER
-
-    client = Client(account_sid, auth_token)
-
-    message = client.messages.create(
-        body=message,
-        from_='whatsapp:twilio_number',
-        to='whatsapp:+256775230160'
-    )
-
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'church_registration.settings')
 
@@ -55,7 +42,7 @@ def main():
 
     now = datetime.now(pytz.timezone('Africa/Kampala'))
     
-    if now.hour != 14:  # If it's not 00:00 (24-hour format), exit the script
+    if now.hour != 19:  # If it's not 00:00 (24-hour format), exit the script
         print("not right time")
         return
 
@@ -67,7 +54,6 @@ def main():
         phone_number = member.Phone_number
         message = f"Happy Birthday, {member.Surname}! Wishing you a fantastic day!"
         send_birthday_sms(phone_number, message)
-        send_whatsapp_birthday_message(phone_number, message)
 
 if __name__ == '__main__':
     main()

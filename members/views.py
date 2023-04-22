@@ -6,7 +6,7 @@ from .models import Member
 from .forms import LoginForm
 from django.contrib.auth import authenticate, logout, login as auth_login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 
 @login_required
@@ -154,3 +154,7 @@ def export_excel(request):
     response = HttpResponse(buffer.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=members.xlsx'
     return response
+
+def ajax_logout(request):
+    logout(request)
+    return JsonResponse({"success": True})

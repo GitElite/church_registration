@@ -14,4 +14,5 @@ urlpatterns = [
     path('update_rows/', views.update_rows, name='update_rows'),
     path('logout_view/', views.logout_view, name='logout_view'),
     path('export_excel/', views.export_excel, name='export_excel'),
+    path('ajax/logout/', views.ajax_logout, name='ajax_logout'),
 ]
