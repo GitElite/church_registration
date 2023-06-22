@@ -1,4 +1,4 @@
-from io import BytesIO, StringIO
+from io import BytesIO
 import openpyxl
 from openpyxl.styles import Font
 from django.shortcuts import render, redirect

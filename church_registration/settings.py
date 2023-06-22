@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
-from django.urls import reverse
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -79,9 +77,9 @@ WSGI_APPLICATION = 'church_registration.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fstDB',
-        'USER': 'postgres',
-        'PASSWORD': 'Alpha123',
+        'NAME': 'Your database name',
+        'USER': 'your user name',
+        'PASSWORD': 'your password',
         'HOST': 'localhost',
         'PORT': '5432',
     }
